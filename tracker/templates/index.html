@@ -1,39 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Welcome VMUF Issue Tracker!</h1>
-    <p>Status: O=Open, P=In progress, A=Assigned, R=Resolved</p>
-    <p>Priorty: L=Low, M=Medium, H=High</p>
-    <table border="1">
-        <tr>
-            <th>Issue Number</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Client Name</th>
-            <th>Department</th>
-            <th>Status</th>
-            <th>Priorty</th>
-            <th>Assigned To</th>
-            <th>Created At</th>
-        </tr>
-        <tr>
-            {% for issue in issues %}
-            <td>{{ issue.issue_number}}</td>
-            <td>{{ issue.title }}</td>
-            <td>{{ issue.description }}</td>
-            <td>{{ issue.client }}</td>
-            <td>{{ issue.department }}</td>
-            <td>{{ issue.status }}</td>
-            <td>{{ issue.priorty }}</td>
-            <td>{{ issue.assigned_to}}</td>
-            <td>{{ issue.created_at }}</td>
-            {% endfor %}
-        </tr>
-    </table>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title%}VMUF Issue tracker{% endblock %}
+{% block body %}
+<h1>Welcome VMUF Issue Tracker!</h1>
+<p>Status: O=Open, P=In progress, A=Assigned, R=Resolved</p>
+<p>Priorty: L=Low, M=Medium, H=High</p>
+<table border="1">
+    <tr>
+        <th>Issue Number</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Client Name</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Priorty</th>
+        <th>Assigned To</th>
+        <th>Created At</th>
+    </tr>
+    <tr>
+        {% for issue in issues %}
+        <td><a href="{% url 'update_issue' issue_id=issue.id %}">{{ issue.issue_number}}</a></td>
+        <td>{{ issue.title }}</td>
+        <td>{{ issue.description }}</td>
+        <td>{{ issue.client }}</td>
+        <td>{{ issue.department }}</td>
+        <td>{{ issue.status }}</td>
+        <td>{{ issue.priority }}</td>
+        <td>{{ issue.assigned_to}}</td>
+        <td>{{ issue.created_at }}</td>
+        {% endfor %}
+    </tr>
+</table>
+{% endblock %}

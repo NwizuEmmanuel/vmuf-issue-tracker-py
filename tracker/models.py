@@ -30,7 +30,7 @@ class Professional(models.Model):
         return f"{self.fullname} (Role: {self.specialty})"
     
 class Issue(models.Model):
-    PRIORTY_CHOICES = [
+    PRIORITY_CHOICES = [
         ('L', 'Low'),
         ('M', 'Medium'),
         ('H', 'High'),
@@ -46,14 +46,14 @@ class Issue(models.Model):
     issue_number = models.CharField(max_length=20, unique=True, editable=False)
     title = models.CharField(max_length=200)
     description = models.TextField()
-    findings = models.TextField(null=True)
-    recommendations = models.TextField(null=True)
+    findings = models.TextField(null=True, blank=True)
+    recommendations = models.TextField(null=True, blank=True)
     client = models.CharField(max_length=200)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="issues")
-    assigned_to = models.ForeignKey(Professional, on_delete=models.SET_NULL, null=True, blank=True, related_name="assigned_issues")
-    priorty = models.CharField(
+    assigned_to = models.ManyToManyField(Professional, blank=True, related_name="assigned_issues")
+    priority = models.CharField(
         max_length=1,
-        choices=PRIORTY_CHOICES,
+        choices=PRIORITY_CHOICES,
         default='M'
     )
     

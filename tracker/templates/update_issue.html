@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2>Update Issue #{{ issue.issue_number }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Issue</button>
+</form>
+{% endblock %}
