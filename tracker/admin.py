@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Issue, Department, Professional, Building
+from django.utils.translation import gettext_lazy as _
 
 class MonthFilter(admin.SimpleListFilter):
     title = 'month'
@@ -34,6 +35,10 @@ class IssueAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs
+
+admin.site.site_header = _("VMUF Issue Tracker")
+admin.site.site_title = _("VMUF Admin")
+admin.site.index_title = _("Dashboard")
 
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(Department)

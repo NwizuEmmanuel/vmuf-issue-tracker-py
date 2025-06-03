@@ -5,7 +5,7 @@ from .forms import IssueUpdateForm
 # Create your views here.
 def index(request):
     issues = Issue.objects.exclude(status='R')
-    return render(request, "index.html", {"issues": issues})
+    return render(request, "issues/index.html", {"issues": issues})
 
 def update_issue(request, issue_id):
     issue = get_object_or_404(Issue, pk=issue_id)
@@ -18,7 +18,7 @@ def update_issue(request, issue_id):
     else:
         form = IssueUpdateForm(instance=issue)
     
-    return render(request, 'update_issue.html', {
+    return render(request, 'issues/update_issue.html', {
         'form': form,
         'issue': issue
     })
