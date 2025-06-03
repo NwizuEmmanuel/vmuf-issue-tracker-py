@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Issue
-from .forms import IssueUpdateForm
+from .forms import IssueUpdateForm, IssueCreateForm
 
 # Create your views here.
 def index(request):
@@ -22,3 +22,20 @@ def update_issue(request, issue_id):
         'form': form,
         'issue': issue
     })
+
+def create_issue(request):
+    if request.method == 'POST':
+        form = IssueCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("issues")
+    else:
+        form = IssueCreateForm()
+    return render(request, "issues/create_issue.html", {'form': form})
+
+def delete_issue(request):    
+    if request.method == "POST":
+        issue_id = request.POST.get("issue_id")
+        issue = get_object_or_404(Issue, pk=issue_id)
+        issue.delete()
+        return redirect("index")

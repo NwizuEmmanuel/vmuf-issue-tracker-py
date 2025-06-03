@@ -1,33 +1,56 @@
 {% extends 'base.html' %}
 {% block title%}VMUF Issue tracker{% endblock %}
 {% block body %}
-<h1>Welcome VMUF Issue Tracker!</h1>
-<p>Status: O=Open, P=In progress, A=Assigned, R=Resolved</p>
-<p>Priorty: L=Low, M=Medium, H=High</p>
-<table border="1">
-    <tr>
-        <th>Issue Number</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Client Name</th>
-        <th>Department</th>
-        <th>Status</th>
-        <th>Priorty</th>
-        <th>Assigned To</th>
-        <th>Created At</th>
-    </tr>
-    <tr>
-        {% for issue in issues %}
-        <td><a href="{% url 'update_issue' issue_id=issue.id %}">{{ issue.issue_number}}</a></td>
-        <td>{{ issue.title }}</td>
-        <td>{{ issue.description }}</td>
-        <td>{{ issue.client }}</td>
-        <td>{{ issue.department }}</td>
-        <td>{{ issue.status }}</td>
-        <td>{{ issue.priority }}</td>
-        <td>{{ issue.assigned_to}}</td>
-        <td>{{ issue.created_at }}</td>
-        {% endfor %}
-    </tr>
-</table>
+<div class="uk-container">
+    <div class="uk-text-lead">VMUF Issue Tracker</div>
+    <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-divider uk-table-large uk-table-expand uk-table-hover">
+            <caption>Issues</caption>
+            <thead>
+                <tr>
+                    <th>Issue Number</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Client Name</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Priorty</th>
+                    <th>Assigned To</th>
+                    <th>Created At</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in issues %}
+                <tr>
+                    <td><a href="{% url 'update_issue' issue_id=issue.id %}">{{ issue.issue_number}}</a></td>
+                    <td>{{ issue.title }}</td>
+                    <td>{{ issue.description }}</td>
+                    <td>{{ issue.client }}</td>
+                    <td>{{ issue.department }}</td>
+                    <td>{{ issue.get_status_display }}</td>
+                    <td>{{ issue.get_priority_display }}</td>
+                    <td>
+                        {% for p in issue.assigned_to.all %}
+                        {{ p }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                        Unassigned
+                        {% endfor %}
+                    </td>
+                    <td>{{ issue.created_at }}</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_issue' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="issue_id" value="{{ issue.id }}">
+                            <button type="submit" class="uk-button uk-button-primary">Delete</button>
+                        </form>
+                    </td>
+                    <td><button class="uk-button uk-button-primary">Print Form</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'create_issue' %}" class="uk-button uk-button-primary uk-margin-small-top">Add New Issue</a>
+</div>
 {% endblock %}
