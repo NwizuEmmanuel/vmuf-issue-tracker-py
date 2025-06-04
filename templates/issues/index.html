@@ -17,7 +17,7 @@
                     <th>Priorty</th>
                     <th>Assigned To</th>
                     <th>Created At</th>
-                    <th colspan="2">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,14 +38,7 @@
                         {% endfor %}
                     </td>
                     <td>{{ issue.created_at }}</td>
-                    <td>
-                        <form method="post" action="{% url 'delete_issue' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="issue_id" value="{{ issue.id }}">
-                            <button type="submit" class="uk-button uk-button-primary">Delete</button>
-                        </form>
-                    </td>
-                    <td><button class="uk-button uk-button-primary">Print Form</button></td>
+                    <td><button class="uk-button uk-button-primary">Print</button></td>
                 </tr>
                 {% endfor %}
             </tbody>

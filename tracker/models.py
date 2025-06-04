@@ -41,6 +41,7 @@ class Issue(models.Model):
         ('A', 'Assigned'),
         ('P', 'In Progress'),
         ('R', 'Resolved'),
+        ('C', 'Cancelled'),
     ]
     
     issue_number = models.CharField(max_length=20, unique=True, editable=False)
@@ -62,7 +63,6 @@ class Issue(models.Model):
         choices=STATUS_CHOICES,
         default='O'
     )
-    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

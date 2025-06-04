@@ -4,7 +4,7 @@ from .forms import IssueUpdateForm, IssueCreateForm
 
 # Create your views here.
 def index(request):
-    issues = Issue.objects.exclude(status='R')
+    issues = Issue.objects.exclude(status='R').exclude(status="C")
     return render(request, "issues/index.html", {"issues": issues})
 
 def update_issue(request, issue_id):
@@ -27,7 +27,7 @@ def create_issue(request):
     if request.method == 'POST':
         form = IssueCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            issue = form.save()
             return redirect("issues")
     else:
         form = IssueCreateForm()
