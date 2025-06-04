@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Issue
 from .forms import IssueUpdateForm, IssueCreateForm
+from django.template.loader import get_template
+from weasyprint import HTML, CSS
+import os
+from django.conf import settings
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -39,3 +44,16 @@ def delete_issue(request):
         issue = get_object_or_404(Issue, pk=issue_id)
         issue.delete()
         return redirect("index")
+
+def generate_pdf(request):
+    template = get_template("issue_form.html")
+    html_string = template.render({})
+    
+    html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
+    css_path = os.path.join(settings.STATIC_ROOT, 'css', 'pdf.csss')
+    
+    css = CSS(filename=css_path)
+    
+    pdf_file = html.write_pdf(stylesheet=[css])
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    return response
