@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Issue, Department, Professional, Building
 from django.utils.translation import gettext_lazy as _
+from django.http import HttpResponseRedirect
 
 class MonthFilter(admin.SimpleListFilter):
     title = 'month'

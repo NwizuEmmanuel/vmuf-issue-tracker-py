@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}">
+</head>
+<body class="uk-container">
+    <h1>Issue #{{ issue.issue_number }}</h1>
+    <p>Date/Time: {{ issue.created_at }}</p>
+    <label class="uk-form-label">Department</label>
+    <input type="text" value="{{ issue.department }}" class="uk-input">
+    <br>
+    <label class="uk-form-label">Title</label>
+    <input type="text" value="{{ issue.title }}" class="uk-input">
+    <br>
+    <label class="uk-form-label">Description</label>
+    <br>
+    <textarea class="uk-textarea">
+        {{ issue.description }}
+    </textarea>
+    <br>
+    <label class="uk-form-label">Client</label>
+    <input type="text" class="uk-input" value="{{ issue.client }}">
+    <br>
+    <label class="uk-form-label">Findings</label>
+    <textarea class="uk-textarea">{{ issue.findings }}</textarea>
+    <br>
+    <label class="uk-form-label">Recommendations</label>
+    <textarea class="uk-textarea">{{ issue.recommendations }}</textarea>
+    <br>
+    <br>
+    <p>______________________________________________________</p>
+    <p>Client Name/Signature</p>
+    <p>_______________________________________________________</p>
+    <p>Assignee Name/Signature</p>
+    <p>________________________________________________________</p>
+    <p>Supervisor (Sir Johnny)'s Signature</p>
+</body>
+</html>

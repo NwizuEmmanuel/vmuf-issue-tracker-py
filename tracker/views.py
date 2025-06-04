@@ -46,14 +46,20 @@ def delete_issue(request):
         return redirect("index")
 
 def generate_pdf(request):
-    template = get_template("issue_form.html")
-    html_string = template.render({})
+    issue_id = None
+    issue = None
+    if request.method == "POST":
+        issue_id = request.POST.get("issue_id")
+        issue = get_object_or_404(Issue, pk=issue_id)
+    
+    template = get_template("issues/issue_pdf.html")
+    html_string = template.render({"issue": issue})
     
     html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
-    css_path = os.path.join(settings.STATIC_ROOT, 'css', 'pdf.csss')
+    # css_path = os.path.join(settings.STATICFILES_DIRS[0], 'css', 'uikit.min.css')
     
-    css = CSS(filename=css_path)
+    # css = CSS(filename=css_path)
     
-    pdf_file = html.write_pdf(stylesheet=[css])
+    pdf_file = html.write_pdf(stylesheet=[])
     response = HttpResponse(pdf_file, content_type='application/pdf')
     return response
