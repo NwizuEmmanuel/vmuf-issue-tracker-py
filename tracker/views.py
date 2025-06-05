@@ -6,12 +6,15 @@ from weasyprint import HTML, CSS
 import os
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def index(request):
-    issues = Issue.objects.exclude(status='R').exclude(status="C")
+    issues = Issue.objects.exclude(status="C")
     return render(request, "issues/index.html", {"issues": issues})
 
+@login_required
 def update_issue(request, issue_id):
     issue = get_object_or_404(Issue, pk=issue_id)
     
@@ -28,6 +31,7 @@ def update_issue(request, issue_id):
         'issue': issue
     })
 
+@login_required
 def create_issue(request):
     if request.method == 'POST':
         form = IssueCreateForm(request.POST)
@@ -38,6 +42,7 @@ def create_issue(request):
         form = IssueCreateForm()
     return render(request, "issues/create_issue.html", {'form': form})
 
+@login_required
 def delete_issue(request):    
     if request.method == "POST":
         issue_id = request.POST.get("issue_id")
@@ -45,6 +50,7 @@ def delete_issue(request):
         issue.delete()
         return redirect("index")
 
+@login_required
 def generate_pdf(request):
     issue_id = None
     issue = None
