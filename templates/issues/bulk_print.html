@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="uk-container">
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="start_date">Start Date</label>
+        <input type="date" id="start_date" name="start_date" class="uk-input" value="{{ timenow }}">
+        
+        <label for="end_date">End Date</label>
+        <input type="date" id="end_date" name="end_date" class="uk-input" value="{{ timenow }}">
+        
+        <label for="departments">Departments</label>
+        <select id="departments" name="departments" class="uk-select">
+            <option value="">...</option>
+            {% for d in departments %}
+                <option value="{{ d.department_name }}">{{ d.department_name }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="client">Client</label>
+        <input type="text" id="client" name="client" class="uk-input" placeholder="Client name">
+        
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" class="uk-input" placeholder="Title">
+        
+        <button type="submit" class="uk-button uk-button-primary">Filter</button>
+    </form>
+
+    <h2>Search results</h2>
+    {% if issues %}
+        {% if issues.exists %}
+            {% include 'issues/display_issues.html' %}
+        {% else %}
+            <p>Found nothing!</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

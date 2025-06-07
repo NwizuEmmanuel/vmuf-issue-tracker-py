@@ -20,14 +20,14 @@ class Department(models.Model):
         unique_together = ["department_name", "building"]
     
     def __str__(self):
-        return f"{self.department_name} (Building: {self.building.building_short_name})"
+        return f"{self.department_name}"
 
 class Professional(models.Model):
     fullname = models.CharField(max_length=200)
     specialty = models.CharField(max_length=100)
     
     def __str__(self):
-        return f"{self.fullname} (Role: {self.specialty})"
+        return f"{self.fullname}"
     
 class Issue(models.Model):
     PRIORITY_CHOICES = [

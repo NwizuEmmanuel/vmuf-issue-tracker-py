@@ -7,4 +7,5 @@ urlpatterns = [
     path("issues/<int:issue_id>/update", views.update_issue, name="update_issue"),
     path("issues/create/", views.create_issue, name="create_issue"),
     path("issues/pdf/", views.generate_pdf, name="pdf_generation"),
+    path('issues/bulk_print', views.bulk_print_issue, name='bulk_print_issue'),
 ]

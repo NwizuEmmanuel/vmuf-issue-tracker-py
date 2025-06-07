@@ -19,20 +19,27 @@
     <nav class="uk-navbar-container uk-padding-small" uk-navbar>
         <div class="uk-navbar-left">
             <div class="uk-navbar-nav">
-                <img src="{% static 'img/icits-logo.png' %}" alt="icits-logo" width="100px">
-                <img src="{% static 'img/vmuf-logo.png' %}" alt="vmuf-logo" width="100px">
+                <a href="/issues/" class='uk-link-reset'>
+                    <img src="{% static 'img/icits-logo.png' %}" alt="icits-logo" width="100px">
+                    <img src="{% static 'img/vmuf-logo.png' %}" alt="vmuf-logo" width="100px">
+                </a>
             </div>
         </div>
+        <div class="uk-navbar-right">
+            <a href="{% url 'bulk_print_issue' %}">Bulk print issue</a>
+            <a href="/admin" class="uk-button">Visit Admin site</a>
+            <a href="{% url 'login' %}" class="uk-button">Login</a>
+            <a href="{% url 'logout' %}" class="uk-button">Logout</a>
+        </div>
     </nav>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="uk-alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     {% block body %}{% endblock %}
     <script src="{% static 'js/uikit.min.js' %}"></script>
     <script src="{% static 'js/uikit-icons.min.js' %}"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-    <!-- <script>
-        $(document).ready(function () {
-            $('.select2').select2();
-        });
-    </script> -->
 </body>
 
 </html>

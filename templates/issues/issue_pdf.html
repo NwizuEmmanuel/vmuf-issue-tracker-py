@@ -1,11 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Home Page</title>
     <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}">
+
+    <style>
+        img{
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
+
 <body class="uk-container">
+    <div>
+        <img src="{% static 'img/icits-logo.png' %}" alt="icits-logo">
+        <span> </span><span>Internet office</span>
+        <img src="{% static 'img/vmuf-logo.png' %}" alt="vmuf-logo">
+        <span> </span><span>Virgen Milagrosa university foundation</span>
+    </div>
     <h1>Issue #{{ issue.issue_number }}</h1>
     <p>Date/Time: {{ issue.created_at }}</p>
     <label class="uk-form-label">Department</label>
@@ -19,6 +34,9 @@
     <textarea class="uk-textarea">
         {{ issue.description }}
     </textarea>
+    <br>
+    <label class="uk-form-label">Assigned To</label>
+    <input type="text" class="uk-input" value="{{ issue.assigned_to.all|join:',' }}">
     <br>
     <label class="uk-form-label">Client</label>
     <input type="text" class="uk-input" value="{{ issue.client }}">
@@ -37,4 +55,5 @@
     <p>________________________________________________________</p>
     <p>Supervisor (Sir Johnny)'s Signature</p>
 </body>
+
 </html>

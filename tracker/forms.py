@@ -1,5 +1,5 @@
 from django import forms
-from .models import Issue
+from .models import Issue,Department
 
 
 class IssueUpdateForm(forms.ModelForm):
