@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils import timezone
-from datetime import date
+from django.views.generic import TemplateView
 
 
 # Create your views here.
@@ -77,35 +77,44 @@ def generate_pdf(request):
 
 
 @login_required
-def bulk_print_issue(request):
-    departments = Department.objects.all()
-    issues = None
-    timenow = date.today().isoformat()  # Use date.today() for a date string
+class IssueFilterView(TemplateView):
+    template_name = 'issues/filter_issues.html'
 
-    if request.method == "POST":
-        start_date = request.POST.get("start_date", "").strip()
-        end_date = request.POST.get("end_date", "").strip()
-        title = request.POST.get("title", "").strip()
-        client = request.POST.get("client", "").strip()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        issues = Issue.objects.all()
+        departments = Department.objects.all()
 
-        # Only filter if all fields are provided
-        if start_date and end_date and title and client:
-            issues = Issue.objects.filter(
-                created_at__date__range=(start_date, end_date),
-                title=title,
-                client=client,
-            )
-        else:
-            issues = Issue.objects.none()  # Or handle missing fields as needed
+        # Get filter parameters from GET request
+        month = self.request.GET.get('month')
+        date = self.request.GET.get('date')
+        title = self.request.GET.get('title', '').strip()
+        department = self.request.GET.get('department', '').strip()
+        client = self.request.GET.get('client', '').strip()
 
-        return render(
-            request,
-            "issues/bulk_print.html",
-            {"departments": departments, "issues": issues, "timenow": timenow},
-        )
+        # Filter by month (expects 'YYYY-MM')
+        if month:
+            year, month_num = month.split('-')
+            issues = issues.filter(created_at__year=year, created_at__month=month_num)
 
-    return render(
-        request,
-        "issues/bulk_print.html",
-        {"departments": departments, "timenow": timenow},
-    )
+        # Filter by exact date (expects 'YYYY-MM-DD')
+        if date:
+            issues = issues.filter(created_at__date=date)
+
+        # Filter by title
+        if title:
+            issues = issues.filter(title__icontains=title)
+
+        # Filter by department (assuming a ForeignKey named 'department')
+        if department:
+            issues = issues.filter(department__department_name__iexact=department)
+
+        # Filter by client
+        if client:
+            issues = issues.filter(client__icontains=client)
+
+        context['issues'] = issues
+        context['departments'] = departments
+        context['today'] = timezone.now().date().isoformat()
+        return context
+
