@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils import timezone
-from django.views.generic import TemplateView
+from datetime import datetime
 
 
 # Create your views here.
@@ -76,45 +76,30 @@ def generate_pdf(request):
     return response
 
 
+from datetime import datetime, time, timedelta
+from django.utils import timezone
+
 @login_required
-class IssueFilterView(TemplateView):
-    template_name = 'issues/filter_issues.html'
+def issue_filter(request):
+    if request.method == 'POST':
+        start_date_str = request.POST.get("start_date", "").strip()
+        end_date_str = request.POST.get("end_date", "").strip()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        issues = Issue.objects.all()
-        departments = Department.objects.all()
+        if start_date_str and end_date_str:
+            # Parse only the date (no time part)
+            start_naive = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_naive = datetime.strptime(end_date_str, "%Y-%m-%d")
 
-        # Get filter parameters from GET request
-        month = self.request.GET.get('month')
-        date = self.request.GET.get('date')
-        title = self.request.GET.get('title', '').strip()
-        department = self.request.GET.get('department', '').strip()
-        client = self.request.GET.get('client', '').strip()
+            # Add time range to cover full day
+            start_naive = datetime.combine(start_naive, time.min)  # 00:00:00
+            end_naive = datetime.combine(end_naive, time.max)      # 23:59:59.999999
 
-        # Filter by month (expects 'YYYY-MM')
-        if month:
-            year, month_num = month.split('-')
-            issues = issues.filter(created_at__year=year, created_at__month=month_num)
+            # Make aware if USE_TZ = True
+            start_date = timezone.make_aware(start_naive)
+            end_date = timezone.make_aware(end_naive)
 
-        # Filter by exact date (expects 'YYYY-MM-DD')
-        if date:
-            issues = issues.filter(created_at__date=date)
+            # Query
+            issues = Issue.objects.filter(created_at__range=(start_date, end_date))
+            return render(request, "issues/filter_issues.html", {'issues': issues})
 
-        # Filter by title
-        if title:
-            issues = issues.filter(title__icontains=title)
-
-        # Filter by department (assuming a ForeignKey named 'department')
-        if department:
-            issues = issues.filter(department__department_name__iexact=department)
-
-        # Filter by client
-        if client:
-            issues = issues.filter(client__icontains=client)
-
-        context['issues'] = issues
-        context['departments'] = departments
-        context['today'] = timezone.now().date().isoformat()
-        return context
-
+    return render(request, 'issues/filter_issues.html')

@@ -2,27 +2,14 @@
 
 {% block body %}
 <div class="uk-container">
-    <form method="get">
-        <label for="month">Month</label>
-        <input type="month" id="month" name="month">
-
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" value="{{ today }}">
-
-        <label for="department">Department</label>
-        <select id="department" name="department" class="uk-select">
-            <option value="">All</option>
-            {% for d in departments %}
-                <option value="{{ d.department_name }}">{{ d.department_name }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="client">Client</label>
-        <input type="text" id="client" name="client" class="uk-input" placeholder="Client name">
-
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title" class="uk-input" placeholder="Title">
-
+    <form method="post">
+        {% csrf_token %}
+        <label for="start_date">Start Date</label>
+        <input type="date" name="start_date" class="uk-input" required>
+        <br>
+        <label for="end_date">End Date</label>
+        <input type="date" name="end_date" class="uk-input" required>
+        <br>
         <button type="submit" class="uk-button uk-button-primary">Filter</button>
     </form>
 
