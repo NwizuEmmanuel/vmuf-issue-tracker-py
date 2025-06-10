@@ -5,7 +5,9 @@ cssselect2==0.8.0
 Django==5.2.1
 dotenv==0.9.9
 fonttools==4.58.1
+gunicorn==23.0.0
 mysqlclient==2.2.7
+packaging==25.0
 pillow==11.2.1
 pycparser==2.22
 pydyf==0.11.0
