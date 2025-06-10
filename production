@@ -1,0 +1,7 @@
+DEBUG=True
+DB_NAME=vmufdb
+DB_USER=vmufuser
+DB_PASSWORD=vmufpassword
+DB_HOST=localhost
+DB_PORT=3306
+SECRET_KEY=secret_key
