@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 COPY requirements.txt .
+COPY ./static /app/static
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app/
