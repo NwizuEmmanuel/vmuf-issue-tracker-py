@@ -6,3 +6,4 @@ DB_HOST=db
 DB_PORT=3306
 SECRET_KEY=secret_key
 DJANGO_ALLOWED_HOSTS=host #localhost 127.0.0.1
+MYSQL_ROOT_PASSWORD=SuperSecureRootPassword123!
