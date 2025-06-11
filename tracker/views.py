@@ -16,7 +16,7 @@ from datetime import datetime
 @login_required
 def index(request):
     issues = Issue.objects.filter(created_at__date=timezone.now().date())
-    return render(request, "issues/index.html", {"issues": issues})
+    return render(request, "tracker/index.html", {"issues": issues})
 
 
 @login_required
@@ -31,7 +31,7 @@ def update_issue(request, issue_id):
     else:
         form = IssueUpdateForm(instance=issue)
 
-    return render(request, "issues/update_issue.html", {"form": form, "issue": issue})
+    return render(request, "tracker/update_issue.html", {"form": form, "issue": issue})
 
 
 @login_required
@@ -43,7 +43,7 @@ def create_issue(request):
             return redirect("issues")
     else:
         form = IssueCreateForm()
-    return render(request, "issues/create_issue.html", {"form": form})
+    return render(request, "tracker/create_issue.html", {"form": form})
 
 
 @login_required
@@ -63,7 +63,7 @@ def generate_pdf(request):
         issue_id = request.POST.get("issue_id")
         issue = get_object_or_404(Issue, pk=issue_id)
 
-    template = get_template("issues/issue_pdf.html")
+    template = get_template("tracker/issue_pdf.html")
     html_string = template.render({"issue": issue})
 
     html = HTML(string=html_string, base_url=request.build_absolute_uri("/"))
@@ -100,6 +100,6 @@ def issue_filter(request):
 
             # Query
             issues = Issue.objects.filter(created_at__range=(start_date, end_date))
-            return render(request, "issues/filter_issues.html", {'issues': issues})
+            return render(request, "tracker/filter_issues.html", {'issues': issues})
 
-    return render(request, 'issues/filter_issues.html')
+    return render(request, 'tracker/filter_issues.html')

@@ -16,7 +16,7 @@
     <h2>Filtered Issues</h2>
     {% if issues %}
         {% if issues.exists %}
-            {% include 'issues/display_issues.html' %}
+            {% include 'display_issues.html' %}
         {% else %}
             <p>No issues found for the selected filters.</p>
         {% endif %}
