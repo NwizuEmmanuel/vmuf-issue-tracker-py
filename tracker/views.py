@@ -61,8 +61,7 @@ def generate_pdf(request):
     if request.method == "POST":
         issue_id = request.POST.get("issue_id")
         issue = get_object_or_404(Issue, pk=issue_id)
-
-    return render(request, {"issue": issue}, content_type='application/pdf')
+        return render(request, {"issue": issue}, content_type='application/pdf')
 
 
 from datetime import datetime, time
