@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     gcc \
     default-libmysqlclient-dev \
     pkg-config \
-    weasyprint \
     build-essential \
     && apt-get clean
 

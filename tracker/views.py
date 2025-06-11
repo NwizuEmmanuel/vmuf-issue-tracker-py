@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Issue, Department
 from .forms import IssueUpdateForm, IssueCreateForm
 from django.template.loader import get_template
-from weasyprint import HTML, CSS
 import os
 from django.conf import settings
 from django.http import HttpResponse
@@ -63,20 +62,10 @@ def generate_pdf(request):
         issue_id = request.POST.get("issue_id")
         issue = get_object_or_404(Issue, pk=issue_id)
 
-    template = get_template("tracker/issue_pdf.html")
-    html_string = template.render({"issue": issue})
-
-    html = HTML(string=html_string, base_url=request.build_absolute_uri("/"))
-    # css_path = os.path.join(settings.STATICFILES_DIRS[0], 'css', 'uikit.min.css')
-
-    # css = CSS(filename=css_path)
-
-    pdf_file = html.write_pdf(stylesheet=[])
-    response = HttpResponse(pdf_file, content_type="application/pdf")
-    return response
+    return render(request, {"issue": issue}, content_type='application/pdf')
 
 
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 from django.utils import timezone
 
 @login_required
