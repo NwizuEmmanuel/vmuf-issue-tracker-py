@@ -4,6 +4,13 @@
 <div class="uk-container">
     <div class="uk-text-lead">VMUF Issue Tracker</div>
     <a href="{% url 'create_issue' %}" class="uk-button uk-button-primary uk-margin-small-top">Add New Issue</a>
+    <div>
+        {% if first and second %}
+            <p>{{ first}}, {{ second }}</p>
+        {% else %}
+            <p>Nothing yet.</p>
+        {% endif %}
+    </div>
     {% include 'tracker/display_issues.html' %}
 </div>
 {% endblock %}

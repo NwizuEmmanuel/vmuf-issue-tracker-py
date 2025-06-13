@@ -91,3 +91,22 @@ def issue_filter(request):
             return render(request, "tracker/filter_issues.html", {'issues': issues})
 
     return render(request, 'tracker/filter_issues.html')
+
+@login_required
+def two_in_one_print(request):
+    if first_issue_number and second_issue_number:
+        first_issue_number = request.session.get('first_issue_number', None)
+        second_issue_number = request.session.get('second_issue_number', None)
+        first_issue = Issue.objects.get(issue_number=first_issue_number)
+        second_issue = Issue.objects.get(issue_number=second_issue_number)
+        return render(request, 'tracker/2_in_1_print.html', {first_issue: first_issue, second_issue: second_issue})
+    else:
+        return render(request, 'tracker/2_in_1_print.html', {})
+
+@login_required
+def add_to_print(request,issue_number):
+    if not request.session.get('second_issue_number'):
+        request.session['second_issue_number'] = issue_number
+    if not request.session.get('first_issue_number'):
+        request.session['first_issue_number'] = issue_number
+    return redirect('index')

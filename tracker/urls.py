@@ -8,4 +8,6 @@ urlpatterns = [
     path("issues/create/", views.create_issue, name="create_issue"),
     path("issues/pdf/", views.generate_pdf, name="pdf_generation"),
     path('issues/filter', views.issue_filter, name='issue_filter'),
+    path('issues/2_in_1_print', views.two_in_one_print, name='2_in_1_print'),
+    path('issues/add_to_print/<issue_number>', views.add_to_print, name='add_to_print'),
 ]
