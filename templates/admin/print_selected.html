@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Issues</title>
+    <style>
+        .line {
+            display: inline-block;
+            width: 0;
+            border-bottom: 1px solid #000;
+        }
+
+    </style>
+</head>
+<body>
+    {% for obj in objects %}
+    <div>
+    <p>SERVICE REQUEST FORM</p>
+    <p>DEPARTMENT/COLLEGES:</p>
+    <P>
+        <div class="line" style="width: 30%;"></div>DATE:
+        {% if not obj.created_at %}
+        <div class="line" style="width: 15%;"></div>
+        {% else %}
+        <span>{{ obj.created_at }}</span>
+        {% endif %}
+    </P>
+    </div>
+<div style="border: 1px solid black; width: 50%;padding: 0.4%;">
+    <div><span>COMPLAINT/REQUEST:</span><div class="line" style="width: 70%;"></div></div>
+    <br>
+    <div class="line" style="width: 100%;"></div>
+    <p>Warrenty date:<input type="checkbox">_________________  <input type="checkbox">Out of Warranty</p>
+    <p>Type of Service: <input type="checkbox">On-Site <input type='checkbox'>Brought-in <input type="checkbox">Pull Out</p>
+</div>
+<br>
+<br>
+<table border="1" style="border: 1px solid black; width: 50%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th><h3>EQUIPMENT</h3></th>
+            <th><h3>MODEL/BRAND</h3></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox">Motherboard</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">Processor</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">Memory</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">Storage</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 20%;"><input type="checkbox">Others</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div style="border: 1px solid black; width: 50%; padding: 0.4%;">
+    <p><span style="font-weight: bolder;">FINDINGS:<hr></span></p>
+    <P><h3>RECOMMENDATION:_______________________________________________________</h3></P>
+    <P>__________________________________________________________________________</P>
+</div>
+
+<table style="width: 50%;">
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            <p>___________________________</p>
+            <p><span style="font-weight: bold;">Requisitioner</span><br>Signature over Printed Name/Date</p>
+            <br>
+            <span>___________________________</span>
+            <p><span style="font-weight: bold;">ICITS Staff</span><br>Signature Over Printed Name/Date</p>
+        </td>
+        <td>
+            <div style="border: 1px solid black; padding: 0.4%;">
+                <h3>Repair Completed:</h3>
+                <p><span>   </span>I recieved the equipment in working condition.</p>
+                <br>
+                <p>_______________________________________________________________</p>
+                <span>Signature over Printer Name/Date</span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>________________________________</span>
+            <span>JOHNNY R. MANAMTAM</span>
+            <span>Head, ICITS Support/Network Administrator</span>
+        </td>
+        <td>
+            <span>_________________________________</span>
+            <span>EFREN Y. IGNACIO, Ph.D.</span>
+            <span>ADMINISTRATOR, Internet Center and Information Technology Services</span>
+        </td>
+    </tr>
+</table>
+{% endfor %}
+<!-- modify the code below later -->
+  <h1>Selected Items for Print</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in objects %}
+      <tr>
+        <td>{{ obj.id }}</td>
+        <td>{{ obj.issue_number }}</td>
+        <td>{{ obj.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button onclick="window.print()">🖨️ Print this page</button>
+</body>
+</html>
