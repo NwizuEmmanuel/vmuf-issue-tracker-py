@@ -1,0 +1,141 @@
+<!-- LEFT FORM -->
+{%load static %} 
+<div>
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'img/vmuf-logo.png' %}" alt="VMUF LOGO" />
+      <span>VIRGEN MILAGROSA<br />UNIVERSITY FOUNDATION</span>
+    </div>
+    <div class="vertical-divider-line"></div>
+    <div class="col">
+      <span>INTERNET CENTER AND INFORMATION<br />TECHNOLOGY SERVICES</span>
+      <img src="{% static 'img/icits-logo.png' %}" alt="icits" />
+    </div>
+    <div class="col" style="margin-left: auto">
+      <div style="border: 1px solid black; padding: 5px">
+        <span>FM-ICITS-1003</span><br />
+        <span>Revision No.00</span><br />
+        <span>Effectivity Date: November 5, 2018</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p>SERVICE REQUEST FORM</p>
+    <p>DEPARTMENT/COLLEGES:</p>
+    <p>
+      <span class="line" style="width: 30%"></span> DATE: 
+      {% if not obj.created_at %}
+      <span class="line" style="width: 15%"></span>
+      {% else %}
+      <span>{{ obj.created_at }}</span>
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="form-box">
+    <div>
+      <span>COMPLAINT/REQUEST:</span>
+      <span class="line" style="width: 70%"></span>
+    </div>
+    <br />
+    <span class="line" style="width: 90%"></span>
+    <br /><br />
+    <div>
+      <span>Warranty date:</span>
+      <input type="checkbox" />
+      <span class="line" style="width: 30%"></span>
+      <input type="checkbox" />
+      <span>Out of Warranty</span>
+    </div>
+    <br />
+    <div>
+      Type of Service:
+      <input type="checkbox" />On-Site <input type="checkbox" />Brought-in
+      <input type="checkbox" />Pull Out
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th><h3>EQUIPMENT</h3></th>
+        <th><h3>MODEL/BRAND</h3></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox" />Motherboard</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" />Processor</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" />Memory</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" />Storage</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" />Others</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form-box">
+    <div>
+      <span style="font-weight: bolder">FINDINGS:</span>
+      <span class="line" style="width: 70%"></span>
+    </div>
+    <br />
+    <span class="line" style="width: 90%"></span>
+    <br /><br />
+    <div>
+      <span style="font-weight: bolder">RECOMMENDATION:</span>
+      <span class="line" style="width: 60%"></span>
+    </div>
+    <br />
+    <span class="line" style="width: 90%"></span>
+  </div>
+
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 40%">
+        <p><span class="line" style="width: 90%"></span></p>
+        <p>
+          <strong>Requisitioner</strong><br />Signature over Printed Name/Date
+        </p>
+        <p><span class="line" style="width: 90%"></span></p>
+        <p>
+          <strong>ICITS Staff</strong><br />Signature Over Printed Name/Date
+        </p>
+        <p><span class="line" style="width: 90%"></span></p>
+        <p>
+          <strong>JOHNNY R. MANAMTAM</strong><br /><span
+            >Head, ICITS Support/Network Administrator</span
+          >
+        </p>
+      </td>
+      <td style="width: 60%">
+        <div class="form-box" style="padding: 0.4%">
+          <p style="font-weight: bold">Repair Completed:</p>
+          <p>I received the equipment in working condition.</p>
+          <p><span class="line" style="width: 70%"></span></p>
+          <span>Signature over Printed Name/Date</span>
+        </div>
+        <p><span class="line" style="width: 90%"></span></p>
+        <p>
+          <strong>EFREN Y. IGNACIO, Ph.D.</strong><br /><span
+            >ADMINISTRATOR, Internet Center and Information Technology
+            Services</span
+          >
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>

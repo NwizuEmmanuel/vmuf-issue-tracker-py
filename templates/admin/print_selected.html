@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Print Issues</title>
+    <style>
+      .line {
+        display: inline-block;
+        width: 0;
+        border-bottom: 1px solid #000;
+      }
+      tr,
+      td {
+        padding: 10px;
+      }
+      .container {
+        display: flex;
+        gap: 20px; /* space between two sections */
+        justify-content: space-between;
+      }
+      .container > div {
+        /* Each section about half width */
+        flex: 1 1 48%;
+        box-sizing: border-box;
+      }
+      .form-box {
+        border: 1px solid black;
+        padding: 0.4%;
+        width: 100%; /* fill container div */
+        box-sizing: border-box;
+        margin-bottom: 1rem;
+      }
+      table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%; /* fill container */
+        margin-bottom: 1rem;
+      }
+      table th,
+      table td {
+        border: 1px solid black;
+        padding: 10px;
+      }
+      /* Additional style for header rows inside the left form's top row */
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+      .col {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .vertical-divider-line {
+        border-left: 1px solid black;
+        height: 40px;
+      }
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    {% if objects|length == 1 %}
+    <div>{% include "admin/issue_form.html" with obj=objects.0 %}</div>
+    {% elif objects|length == 2 %}
+    <div class="container" style="display: flex; gap: 20px">
+      {% for obj in objects %}
+      <div style="flex: 1 1 48%; box-sizing: border-box">
+        {% include "admin/issue_form.html" with obj=obj %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %} {# Handle more than 2 if needed, or loop normally #} {% for obj
+    in objects %} {% include "admin/issue_form.html" with obj=obj %} {% endfor
+    %} {% endif %}
+  </body>
+</html>
