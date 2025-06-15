@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <h1>Welcome to VMUF Issue Tracker Portal</h1>
-    <p><a href="admin/">Enter Portal</a></p>
-</body>
+    {% load static %}
+    <style>
+      img {
+        width: 100px;
+        height: 100px;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .main-text {
+        text-align: center;
+      }
+      body {
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("{% static "img/vmuf.jpg"%}") no-repeat center center/cover;
+      }
+
+      .text {
+        color: white;
+        font-weight: bold;
+      }
+      a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid blue;
+        background-color: blue;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    {% load static %}
+    <nav>
+      <img src="{% static 'img/icits-logo.png' %}" alt="icits-logo" />
+      <span class="text">VIRGEN MILAGROSA UNIVERSITY FOUNDATION</span>
+      <img src="{% static 'img/vmuf-logo.png' %}" alt="vmuf-logo" />
+      <span class="text"
+        >INTERNET CENTER AND INFORMATION TECHNOLOGY SERVICES</span
+      >
+    </nav>
+    <h1 class="main-text text">Welcome to VMUF Issue Tracker Portal</h1>
+    <p style="text-align: center; padding-top: 5%">
+      <a href="admin/">Enter Portal</a>
+    </p>
+  </body>
 </html>

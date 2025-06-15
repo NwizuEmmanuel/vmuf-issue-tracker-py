@@ -1,5 +1,5 @@
 <!-- LEFT FORM -->
-{%load static %} 
+{%load static %}
 <div>
   <div class="row">
     <div class="col">
@@ -24,8 +24,11 @@
     <p>SERVICE REQUEST FORM</p>
     <p>DEPARTMENT/COLLEGES:</p>
     <p>
-      <span class="line" style="width: 30%"></span> DATE: 
-      {% if not obj.created_at %}
+      {% if obj.department %} {{ obj.department }} {% else %}<span
+        class="line"
+        style="width: 30%"
+      ></span
+      >{% endif %} DATE: {% if not obj.created_at %}
       <span class="line" style="width: 15%"></span>
       {% else %}
       <span>{{ obj.created_at }}</span>
@@ -36,10 +39,14 @@
   <div class="form-box">
     <div>
       <span>COMPLAINT/REQUEST:</span>
+      {% if obj.title %} {{ obj.title }} {% else %}
       <span class="line" style="width: 70%"></span>
+      {% endif %}
     </div>
     <br />
+    {% if not obj.title %}
     <span class="line" style="width: 90%"></span>
+    {% endif %}
     <br /><br />
     <div>
       <span>Warranty date:</span>
@@ -90,17 +97,29 @@
   <div class="form-box">
     <div>
       <span style="font-weight: bolder">FINDINGS:</span>
+      {% if obj.findings %}
+      {{ obj.findings }}
+      {% else %}
       <span class="line" style="width: 70%"></span>
+      {% endif %}
     </div>
+    {% if not obj.findings %}
     <br />
     <span class="line" style="width: 90%"></span>
+    {% endif %}
     <br /><br />
     <div>
       <span style="font-weight: bolder">RECOMMENDATION:</span>
+      {% if obj.recommendations %}
+      {{ obj.recommendations }}
+      {% else %}
       <span class="line" style="width: 60%"></span>
+      {% endif %}
     </div>
+    {% if not obj.recommendations %}
     <br />
     <span class="line" style="width: 90%"></span>
+    {% endif %}
   </div>
 
   <table style="width: 100%">
