@@ -63,11 +63,30 @@
         width: 40px;
         height: 40px;
       }
+      .empty-form {
+        flex: 1 1 48%;
+        box-sizing: border-box;
+        border: 1px dashed #ccc; /* visible on screen for debugging */
+        height: auto;
+        min-height: 400px; /* Adjust to roughly match form height */
+        margin-bottom: 1rem;
+      }
+
+      @media print {
+        .empty-form {
+          border: none;
+          min-height: 100%;
+          height: auto;
+        }
+      }
     </style>
   </head>
   <body>
     {% if objects|length == 1 %}
-    <div>{% include "printing/issue_form.html" with obj=objects.0 %}</div>
+    <div class="container">
+      <div>{% include "printing/issue_form.html" with obj=objects.0 %}</div>
+      <div class="empty-form print-only"></div>
+    </div>
     {% elif objects|length == 2 %}
     <div class="container" style="display: flex; gap: 20px">
       {% for obj in objects %}
@@ -77,7 +96,7 @@
       {% endfor %}
     </div>
     {% else %} {# Handle more than 2 if needed, or loop normally #} {% for obj
-    in objects %} {% include "printing/issue_form.html" with obj=obj %} {% endfor
-    %} {% endif %}
+    in objects %} {% include "printing/issue_form.html" with obj=obj %} {%
+    endfor %} {% endif %}
   </body>
 </html>
