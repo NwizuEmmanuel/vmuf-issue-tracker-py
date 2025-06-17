@@ -97,9 +97,7 @@
   <div class="form-box">
     <div>
       <span style="font-weight: bolder">FINDINGS:</span>
-      {% if obj.findings %}
-      {{ obj.findings }}
-      {% else %}
+      {% if obj.findings %} {{ obj.findings }} {% else %}
       <span class="line" style="width: 70%"></span>
       {% endif %}
     </div>
@@ -110,9 +108,7 @@
     <br /><br />
     <div>
       <span style="font-weight: bolder">RECOMMENDATION:</span>
-      {% if obj.recommendations %}
-      {{ obj.recommendations }}
-      {% else %}
+      {% if obj.recommendations %} {{ obj.recommendations }} {% else %}
       <span class="line" style="width: 60%"></span>
       {% endif %}
     </div>
@@ -125,11 +121,20 @@
   <table style="width: 100%">
     <tr>
       <td style="width: 40%">
+        {% if obj.client %} {{ obj.client }} {% endif %} {% if not obj.client %}
         <p><span class="line" style="width: 90%"></span></p>
+        {% endif %}
         <p>
           <strong>Requisitioner</strong><br />Signature over Printed Name/Date
         </p>
+        {% if obj.assigned_to %}
+        {% for s in obj.assigned_to.all %}
+        {{ s.fullname }}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if not obj.assigned_to %}
         <p><span class="line" style="width: 90%"></span></p>
+        {% endif %}
         <p>
           <strong>ICITS Staff</strong><br />Signature Over Printed Name/Date
         </p>
