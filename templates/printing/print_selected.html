@@ -6,6 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Print Issues</title>
     <style>
+      /* Page setup for Letter landscape */
+      @page {
+        size: letter;
+        margin: 0.5in;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        max-width: 10in; /* approx printable width landscape */
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Container holds two forms side-by-side */
+      .container {
+        display: flex;
+        gap: 1rem; /* space between columns */
+        justify-content: space-between;
+        max-width: 10in; /* same as body */
+        margin: 0 auto 1rem auto;
+      }
+
+      /* Each form container */
+      .container > div {
+        flex: 1 1 48%;
+        box-sizing: border-box;
+        border: 1px solid black;
+        padding: 0.5rem;
+        min-height: 10.5in; /* fill roughly full page height */
+      }
+
+      /* Empty placeholder style */
+      .empty-form {
+        border: 1px dashed #ccc;
+        background-color: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-style: italic;
+        font-size: 1rem;
+        min-height: 10.5in;
+      }
+
+      /* Your existing styles */
       .line {
         display: inline-block;
         width: 0;
@@ -15,27 +63,17 @@
       td {
         padding: 10px;
       }
-      .container {
-        display: flex;
-        gap: 20px; /* space between two sections */
-        justify-content: space-between;
-      }
-      .container > div {
-        /* Each section about half width */
-        flex: 1 1 48%;
-        box-sizing: border-box;
-      }
       .form-box {
         border: 1px solid black;
         padding: 0.4%;
-        width: 100%; /* fill container div */
+        width: 100%;
         box-sizing: border-box;
         margin-bottom: 1rem;
       }
       table {
         border: 1px solid black;
         border-collapse: collapse;
-        width: 100%; /* fill container */
+        width: 100%;
         margin-bottom: 1rem;
       }
       table th,
@@ -43,7 +81,6 @@
         border: 1px solid black;
         padding: 10px;
       }
-      /* Additional style for header rows inside the left form's top row */
       .row {
         display: flex;
         align-items: center;
@@ -60,43 +97,57 @@
         height: 40px;
       }
       img {
-        width: 40px;
-        height: 40px;
-      }
-      .empty-form {
-        flex: 1 1 48%;
-        box-sizing: border-box;
-        border: 1px dashed #ccc; /* visible on screen for debugging */
-        height: auto;
-        min-height: 400px; /* Adjust to roughly match form height */
-        margin-bottom: 1rem;
+        width: 50px;
+        height: 50px;
       }
 
       @media print {
+        /* Remove dashed borders from empty slot */
         .empty-form {
           border: none;
-          min-height: 100%;
-          height: auto;
+          background: none;
+          color: black;
+          font-style: normal;
+          min-height: auto;
+        }
+
+        body,
+        .container,
+        .container > div {
+          max-width: 100%;
+          min-height: auto;
+          border: none;
+          padding: 0;
+          margin: 0;
+        }
+        /* Scale the forms container to fit and keep readability */
+        .container {
+          transform: scale(0.95);
+          transform-origin: top left;
+          /* Prevent clipping by adjusting width to compensate scaling */
+          width: calc(100% / 0.95);
+        }
+
+        body {
+          font-size: 12pt; /* Increase base font size for print */
         }
       }
     </style>
   </head>
   <body>
-    {% if objects|length == 1 %}
     <div class="container">
+      {% if objects|length >= 1 %}
       <div>{% include "printing/issue_form.html" with obj=objects.0 %}</div>
-      <div class="empty-form print-only"></div>
+      {% else %}
+      <div class="empty-form"></div>
+      {% endif %} {% if objects|length >= 2 %}
+      <div>{% include "printing/issue_form.html" with obj=objects.1 %}</div>
+      {% else %}
+      <div class="empty-form"></div>
+      {% endif %}
     </div>
-    {% elif objects|length == 2 %}
-    <div class="container" style="display: flex; gap: 20px">
-      {% for obj in objects %}
-      <div style="flex: 1 1 48%; box-sizing: border-box">
-        {% include "printing/issue_form.html" with obj=obj %}
-      </div>
-      {% endfor %}
-    </div>
-    {% else %} {# Handle more than 2 if needed, or loop normally #} {% for obj
-    in objects %} {% include "printing/issue_form.html" with obj=obj %} {%
-    endfor %} {% endif %}
+
+    {% if objects|length > 2 %} {% for obj in objects|slice:"2:" %} {% include
+    "printing/issue_form.html" with obj=obj %} {% endfor %} {% endif %}
   </body>
 </html>
