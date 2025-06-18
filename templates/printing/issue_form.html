@@ -21,6 +21,9 @@
   </div>
 
   <div>
+    {% if obj.issue_number %}
+    <p>SFR NO: {{ obj.issue_number }}</p>
+    {% endif %}
     <p>SERVICE REQUEST FORM</p>
     <p>DEPARTMENT/COLLEGES:</p>
     <p>
@@ -127,12 +130,7 @@
         <p>
           <strong>Requisitioner</strong><br />Signature over Printed Name/Date
         </p>
-        {% if obj.assigned_to %}
-        {% for s in obj.assigned_to.all %}
-        {{ s.fullname }}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        {% endif %}
-        {% if not obj.assigned_to %}
+        {% if obj.assigned_to %} {% for s in obj.assigned_to.all %} {{s.fullname }}{% if not forloop.last %},{% endif %} {% endfor %} {% endif%} {% if not obj.assigned_to %}
         <p><span class="line" style="width: 90%"></span></p>
         {% endif %}
         <p>
